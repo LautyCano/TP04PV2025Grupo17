@@ -41,7 +41,6 @@ function Producto() {
         setStock("");
     };
 
-
     return (
         <div>
             <div className='Titulo'>
