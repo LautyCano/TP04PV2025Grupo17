@@ -9,15 +9,12 @@ const calcularPrecioConDescuento = (precio, descuento) => {
     return precioConDescuento.toFixed(2);
 };
 
-function Producto() {
+function Producto({ productos, setProductos }) {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [precio, setPrecio] = useState("");
     const [descuento, setDescuento] = useState("");
     const [stock, setStock] = useState("");
-    const [productos, setProducto] = useState([]);
-
-    
 
     const manejarEnvio = (e) => {
         e.preventDefault();
@@ -32,7 +29,7 @@ function Producto() {
             realizada: false
         };
 
-        setProducto([...productos, nuevoProducto]);
+        setProductos([...productos, nuevoProducto]);
         console.log("Lista de Productos actualizada:", [...productos, nuevoProducto]);
 
         setNombre("");
@@ -41,7 +38,6 @@ function Producto() {
         setDescuento("");
         setStock("");
     };
-
 
     return (
         <div>
@@ -75,35 +71,35 @@ function Producto() {
 
                     <div className='PrecioUni'>
                         <label>Precio:</label>
-                        <input 
-                        type="number" 
-                        id="precio" 
-                        name="precio"
-                        value={precio}
-                        onChange={(e) => setPrecio(e.target.value)}
-                        required />
+                        <input
+                            type="number"
+                            id="precio"
+                            name="precio"
+                            value={precio}
+                            onChange={(e) => setPrecio(e.target.value)}
+                            required />
                     </div>
 
                     <div className='Descuento'>
                         <label>Descuento:</label>
-                        <input 
-                        type="number" 
-                        id="descuento" 
-                        name="descuento"
-                        value={descuento}
-                        onChange={(e) => setDescuento(e.target.value)}
-                        required />
+                        <input
+                            type="number"
+                            id="descuento"
+                            name="descuento"
+                            value={descuento}
+                            onChange={(e) => setDescuento(e.target.value)}
+                            required />
                     </div>
 
                     <div className='Stock'>
                         <label>Stock:</label>
-                        <input 
-                        type="number" 
-                        id="stock" 
-                        name="stock"
-                        value={stock}
-                        onChange={(e) => setStock(e.target.value)}
-                        required />
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
+                            required />
                     </div>
 
                     <button type="submit">Registar Producto</button>
@@ -114,7 +110,7 @@ function Producto() {
             <ul>
                 {productos.map((producto) => (
                     <li key={producto.id}>
-                         Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock} 
+                        Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Id: {producto.id} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock}
                     </li>
                 ))}
             </ul>
