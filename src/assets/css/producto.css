@@ -1,0 +1,32 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-left: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+
+  input, button {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    border: 1px solid #9b9a9a;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+  }
+
+  button[type="submit"] {
+    background-color: #333;;
+    color: white;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #005fa3;
+  }
