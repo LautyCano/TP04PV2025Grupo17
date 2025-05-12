@@ -1,13 +1,16 @@
-import './assets/css/App.css'
-import Producto from './assets/components/Producto';
+import { useState } from "react";
+import Producto from "./assets/components/Producto";
+import SearchBar from "./assets/components/SearchBar";
 
 function App() {
- 
-  return (
-    <>
-      <Producto/>
-    </>
-);
+    const [productos, setProductos] = useState([]);
+
+    return (
+        <div>
+            <Producto productos={productos} setProductos={setProductos} />
+            <SearchBar productos={productos} />
+        </div>
+    );
 }
 
-export default App
+export default App;
