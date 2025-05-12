@@ -114,7 +114,7 @@ function Producto() {
             <ul>
                 {productos.map((producto) => (
                     <li key={producto.id}>
-                         Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock} 
+                        - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock} 
                     </li>
                 ))}
             </ul>
