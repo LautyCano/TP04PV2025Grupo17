@@ -31,7 +31,6 @@ function Producto({ productos, setProductos }) {
 
         setProductos([...productos, nuevoProducto]);
         console.log("Lista de Productos actualizada:", [...productos, nuevoProducto]);
-
         setNombre("");
         setDescripcion("");
         setPrecio("");
@@ -59,7 +58,7 @@ function Producto({ productos, setProductos }) {
                     </div>
 
                     <div className='Descrip'>
-                        <label>Descripción:</label>
+                        <label>Descripcion:</label>
                         <input
                             type="text"
                             id="descripcion"
@@ -103,6 +102,7 @@ function Producto({ productos, setProductos }) {
                     </div>
 
                     <button type="submit">Registar Producto</button>
+
                 </form>
             </div>
 
