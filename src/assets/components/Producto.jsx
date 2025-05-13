@@ -38,6 +38,9 @@ function Producto({ productos, setProductos }) {
         setStock("");
     };
 
+    const eliminarProducto = (id) => {
+        setProductos(productos.filter((producto) => producto.id !== id));
+    }
     return (
         <div>
             <div className='Titulo'>
@@ -111,6 +114,7 @@ function Producto({ productos, setProductos }) {
                 {productos.map((producto) => (
                     <li key={producto.id}>
                         - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock} 
+                        <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>
