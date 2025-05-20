@@ -25,7 +25,7 @@ function Producto({ productos, setProductos }) {
             precio,
             descuento,
             stock,
-            realizada: false
+            activo: true
         };
 
         setProductos([...productos, nuevoProducto]);
@@ -40,9 +40,11 @@ function Producto({ productos, setProductos }) {
  
 
     const eliminarProducto = (id) => {
-        setProductos(productos.filter((producto) => producto.id !== id));
+        const productosActualizados = productos.map((producto) =>
+        producto.id === id ? { ...producto, activo: false} : producto
+        );
+    setProductos(productosActualizados);
     };
-
     return (
         <div>
             <div className='Titulo'>
@@ -113,7 +115,7 @@ function Producto({ productos, setProductos }) {
 
             <h3>Listado de Productos</h3>
             <ul>
-                {productos.map((producto) => (
+                {productos.filter(p => p.activo).map((producto) => (
                     <li key={producto.id}>
                         - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
                         <button type="button" className="eliminar" onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
