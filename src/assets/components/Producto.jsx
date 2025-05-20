@@ -1,13 +1,9 @@
+import {useState, useCallback} from "react";
+import { calcularPrecioConDescuento } from "./CalcularDesct.jsx";
 import '/src/assets/css/producto.css';
-import { useState } from "react";
 
 let idContador = 0;
 
-const calcularPrecioConDescuento = (precio, descuento) => {
-    const descuentoDecimal = descuento / 100;
-    const precioConDescuento = precio * (1 - descuentoDecimal);
-    return precioConDescuento.toFixed(2);
-};
 
 function Producto({ productos, setProductos }) {
     const [nombre, setNombre] = useState("");
@@ -16,7 +12,10 @@ function Producto({ productos, setProductos }) {
     const [descuento, setDescuento] = useState("");
     const [stock, setStock] = useState("");
 
-    const manejarEnvio = (e) => {
+    // Función para manejar el envío del formulario
+    // Se utiliza useCallback para evitar la creación de una nueva función en cada renderizado
+    // y así optimizar el rendimiento del componente
+    const manejarEnvio = useCallback ((e) => {
         e.preventDefault();
 
         const nuevoProducto = {
@@ -36,11 +35,14 @@ function Producto({ productos, setProductos }) {
         setPrecio("");
         setDescuento("");
         setStock("");
-    };
+    }, [productos, nombre, descripcion, precio, descuento, stock]);
+
+ 
 
     const eliminarProducto = (id) => {
         setProductos(productos.filter((producto) => producto.id !== id));
-    }
+    };
+
     return (
         <div>
             <div className='Titulo'>
@@ -109,12 +111,12 @@ function Producto({ productos, setProductos }) {
                 </form>
             </div>
 
-            <h3>Listado Productos</h3>
+            <h3>Listado de Productos</h3>
             <ul>
                 {productos.map((producto) => (
                     <li key={producto.id}>
-                        - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio} - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)} - Stock: {producto.stock} 
-                        <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
+                        - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
+                        <button type="button" className="eliminar" onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>
