@@ -1,43 +1,51 @@
-import { useState, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { calcularPrecioConDescuento } from "./CalcularDesct.jsx";
 
 function SearchBar({ productos }) {
     const [termino, setTermino] = useState("");
-    const [resultados, setResultados] = useState([]);
+    const [modoBusqueda, setModoBusqueda] = useState("");
 
-    const buscarProducto = useCallback(() => {
-        const terminoNormalizado = termino.trim().toLowerCase();
+    const resultados = useMemo(() => {
+        const texto = termino.trim().toLowerCase();
 
-        const resultadosFiltrados = productos.filter((producto) =>
-            producto.descripcion.toLowerCase().includes(terminoNormalizado) ||
-            producto.id.toString() === terminoNormalizado
-        );
+        if (modoBusqueda === "id") {
+            return productos.filter(p => p.id.toString() === texto);
+        }
 
-        setResultados(resultadosFiltrados);
-    }, [productos, termino]);
+        if (modoBusqueda === "nombre") {
+            return productos.filter(p => p.nombre.toLowerCase().includes(texto));
+        }
+
+        return [];
+    }, [productos, termino, modoBusqueda]);
 
     return (
         <div>
             <h2>Buscar Producto</h2>
+
             <input
                 type="text"
-                placeholder="Buscar por descripción o ID"
+                placeholder="Escribí el nombre o el ID"
                 value={termino}
                 onChange={(e) => setTermino(e.target.value)}
             />
-            <button type="button" onClick={buscarProducto}> Buscar </button>
+
+            <div>
+                <button onClick={() => setModoBusqueda("nombre")}>Buscar por Nombre</button>
+                <button onClick={() => setModoBusqueda("id")}>Buscar por ID</button>
+            </div>
 
             {resultados.length > 0 && (
-                <>
-                    <h3>Resultados de Búsqueda</h3>
+                <div>
+                    <h3>Resultados</h3>
                     <ul>
-                        {resultados.map((producto) => (
-                            <li key={producto.id}>
-                               Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
+                        {resultados.map((prod) => (
+                            <li key={prod.id}>
+                                Nombre: {prod.nombre} - Descripción: {prod.descripcion} - Precio: {prod.precio}$ - Descuento: {prod.descuento}% - Precio Final: {calcularPrecioConDescuento(prod.precio, prod.descuento)}$ - Stock: {prod.stock}
                             </li>
                         ))}
                     </ul>
-                </>
+                </div>
             )}
         </div>
     );
