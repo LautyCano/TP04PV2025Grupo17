@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { calcularPrecioConDescuento } from "./CalcularDesct.jsx";
 
 function SearchBar({ productos }) {
     const [termino, setTermino] = useState("");
@@ -24,9 +25,7 @@ function SearchBar({ productos }) {
                 value={termino}
                 onChange={(e) => setTermino(e.target.value)}
             />
-            <button type="button" onClick={buscarProducto}>
-                Buscar
-            </button>
+            <button type="button" onClick={buscarProducto}> Buscar </button>
 
             {resultados.length > 0 && (
                 <>
@@ -34,7 +33,7 @@ function SearchBar({ productos }) {
                     <ul>
                         {resultados.map((producto) => (
                             <li key={producto.id}>
-                                Nombre: {producto.nombre} - Descripción: {producto.descripcion}
+                               Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
                             </li>
                         ))}
                     </ul>
