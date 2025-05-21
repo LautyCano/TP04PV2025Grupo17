@@ -46,3 +46,10 @@ form {
   button.eliminar:hover {
     background-color: #ff0000;
   }
+
+    button.editar {
+    background-color: #333;
+  }
+  button.editar:hover {
+    background-color: hwb(32 0% 0%);
+  }
