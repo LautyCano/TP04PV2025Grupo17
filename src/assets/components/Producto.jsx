@@ -147,15 +147,37 @@ if (modoEdicion) {
             </div>
 
             <h3>Listado de Productos</h3>
-            <ul>
-                {productos.filter(p => p.activo).map((producto) => (
-                    <li key={producto.id}>
-                        - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
-                        <button type="button" className="eliminar" onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
-                        <button type="button" className="editar" onClick={() => editarProducto(producto)}> Editar </button>
-                    </li>
-                ))}
-            </ul>
+            <table class="tabla-productos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio Original</th>
+                        <th>Descuento</th>
+                        <th>Precio Final</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {productos.filter(p => p.activo).map((producto) => (
+                        <tr key={producto.id}>
+                            <td>{producto.id}</td>
+                            <td>{producto.nombre}</td>
+                            <td>{producto.descripcion}</td>
+                            <td>{producto.precio}$</td>
+                            <td>{producto.descuento}%</td>
+                            <td>{calcularPrecioConDescuento(producto.precio, producto.descuento)}$</td>
+                            <td>{producto.stock}</td>
+                            <td>
+                                <button type="button" class="eliminar" onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
+                                <button type="button" class="editar" onClick={() => editarProducto(producto)}>Editar</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
