@@ -1,29 +1,34 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { calcularPrecioConDescuento } from "./CalcularDesct.jsx";
+import '/src/assets/css/producto.css';
 
 function SearchBar({ productos }) {
     const [termino, setTermino] = useState("");
     const [modo, setModo] = useState("id");
+    const [resultados, setResultados] = useState([]);
 
-    const resultados = useMemo(() => {
+    const buscar = () => {
         const texto = termino.toLowerCase().trim();
+        let filtrados = [];
+
         if (modo === "id") {
-            return productos.filter(p => p.id.toString() === texto);
+            filtrados = productos.filter(p => p.id.toString() === texto);
+        } else if (modo === "nombre") {
+            filtrados = productos.filter(p => p.nombre.toLowerCase().includes(texto));
         }
-        if (modo === "nombre") {
-            return productos.filter(p => p.nombre.toLowerCase().includes(texto));
-        }
-        return [];
-    }, [termino, modo, productos]);
+
+        setResultados(filtrados);
+    };
 
     const limpiar = () => {
         setTermino("");
+        setResultados([]);
     };
 
     return (
-        <div style={{ padding: "20px", fontFamily: "Arial" }}>
+        <div className="busqueda-container">
             <h2>Buscar Producto</h2>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
+            <div className="barra-busqueda">
                 <label><input type="radio" value="id" checked={modo === "id"} onChange={() => setModo("id")} /> ID</label>
                 <label><input type="radio" value="nombre" checked={modo === "nombre"} onChange={() => setModo("nombre")} /> Nombre</label>
                 <input
@@ -31,37 +36,34 @@ function SearchBar({ productos }) {
                     value={termino}
                     onChange={(e) => setTermino(e.target.value)}
                     placeholder="Buscar..."
-                    style={{ padding: "5px" }}
                 />
-                <button style={{ background: "#007bff", color: "#fff", border: "none", padding: "6px 12px", cursor: "pointer" }}>
-                    Buscar
-                </button>
-                <label><input type="checkbox" onChange={limpiar} checked={termino === ""} /> Limpiar</label>
+                <button type="button" onClick={buscar}>Buscar</button>
+                <label><input type="checkbox" onChange={limpiar} checked={termino === "" && resultados.length === 0} /> Limpiar</label>
             </div>
 
             {resultados.length > 0 && (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className="tabla-productos">
                     <thead>
-                        <tr style={{ background: "#007bff", color: "white" }}>
+                        <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Precio</th>
-                            <th>Desc.</th>
-                            <th>Final</th>
+                            <th>Descuento</th>
+                            <th>Precio Final</th>
                             <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody>
                         {resultados.map(p => (
                             <tr key={p.id}>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.id}</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.nombre}</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.descripcion}</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.precio}$</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.descuento}%</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{calcularPrecioConDescuento(p.precio, p.descuento)}$</td>
-                                <td style={{ border: "1px solid #ccc", padding: "5px" }}>{p.stock}</td>
+                                <td>{p.id}</td>
+                                <td>{p.nombre}</td>
+                                <td>{p.descripcion}</td>
+                                <td>{p.precio}$</td>
+                                <td>{p.descuento}%</td>
+                                <td>{calcularPrecioConDescuento(p.precio, p.descuento)}$</td>
+                                <td>{p.stock}</td>
                             </tr>
                         ))}
                     </tbody>
