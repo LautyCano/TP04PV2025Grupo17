@@ -12,12 +12,32 @@ function Producto({ productos, setProductos }) {
     const [descuento, setDescuento] = useState("");
     const [stock, setStock] = useState("");
 
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [productoEditandoId, setProductoEditandoId] = useState(null);
+
     // Función para manejar el envío del formulario
     // Se utiliza useCallback para evitar la creación de una nueva función en cada renderizado
     // y así optimizar el rendimiento del componente
     const manejarEnvio = useCallback ((e) => {
         e.preventDefault();
 
+if (modoEdicion) {
+      const productosActualizados = productos.map((producto) =>
+        producto.id === productoEditandoId
+          ? {
+              ...producto,
+              nombre,
+              descripcion,
+              precio,
+              descuento,
+              stock,
+            }
+          : producto
+      );
+      setProductos(productosActualizados);
+      setModoEdicion(false);
+      setProductoEditandoId(null);
+    } else { 
         const nuevoProducto = {
             id: ++idContador,
             nombre,
@@ -25,11 +45,13 @@ function Producto({ productos, setProductos }) {
             precio,
             descuento,
             stock,
-            activo: true
+            activo: true 
+    
         };
-
         setProductos([...productos, nuevoProducto]);
         console.log("Lista de Productos actualizada:", [...productos, nuevoProducto]);
+        };
+
         setNombre("");
         setDescripcion("");
         setPrecio("");
@@ -45,6 +67,17 @@ function Producto({ productos, setProductos }) {
         );
     setProductos(productosActualizados);
     };
+
+    const editarProducto = (producto) => {
+    setNombre(producto.nombre);
+    setDescripcion(producto.descripcion);
+    setPrecio(producto.precio);
+    setDescuento(producto.descuento);
+    setStock(producto.stock);
+    setModoEdicion(true);
+    setProductoEditandoId(producto.id);
+    };
+
     return (
         <div>
             <div className='Titulo'>
@@ -108,7 +141,7 @@ function Producto({ productos, setProductos }) {
                             required />
                     </div>
 
-                    <button type="submit">Registar Producto</button>
+                    <button type="submit"> {modoEdicion ? "Guardar Cambios" : "Registrar Producto"} </button>
 
                 </form>
             </div>
@@ -119,6 +152,7 @@ function Producto({ productos, setProductos }) {
                     <li key={producto.id}>
                         - ID:{producto.id} Nombre: {producto.nombre} - Descripcion: {producto.descripcion} - Precio Original: {producto.precio}$ - Descuento: {producto.descuento}% - Precio con Descuento: {calcularPrecioConDescuento(producto.precio, producto.descuento)}$ - Stock: {producto.stock} 
                         <button type="button" className="eliminar" onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
+                        <button type="button" className="editar" onClick={() => editarProducto(producto)}> Editar </button>
                     </li>
                 ))}
             </ul>
