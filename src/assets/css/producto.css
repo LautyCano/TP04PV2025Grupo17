@@ -31,22 +31,51 @@ form {
     background-color: #033da9;
   }
 
-  button[type="button"] {
-    background-color: #333;
+ .tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Espacio superior opcional */
+}
+
+.tabla-productos th,
+.tabla-productos td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.tabla-productos thead tr {
+    background: #007bff;
     color: white;
+}
+
+.tabla-productos th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.tabla-productos tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo para filas pares */
+}
+
+.tabla-productos tbody tr:hover {
+    background-color: #ddd; /* Color de fondo al pasar el mouse */
+}
+
+.tabla-productos button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
     cursor: pointer;
-  }
-  button[type="button"]:hover {
-    background-color: #5304e5;
-  }
+    border-radius: 3px;
+}
 
-  button.eliminar {
-    background-color: #333;
-  }
-  button.eliminar:hover {
-    background-color: #ff0000;
-  }
+.tabla-productos .eliminar {
+    background-color: #dc3545; 
+    color: white;
+}
 
+HEAD
     button.editar {
     background-color: #333;
   }
@@ -82,4 +111,8 @@ form {
 .tabla-productos th {
   background-color: #007bff;
   color: white;
+}
+.tabla-productos .editar {
+    background-color: #ffc107; 
+    color: #333;
 }
