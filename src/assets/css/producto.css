@@ -55,7 +55,7 @@ form {
 }
 
 .tabla-productos tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Color de fondo para filas pares */
+    background-color: #7a7979; /* Color de fondo para filas pares */
 }
 
 .tabla-productos tbody tr:hover {
@@ -73,6 +73,27 @@ form {
 .tabla-productos .eliminar {
     background-color: #dc3545; 
     color: white;
+}
+
+.tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabla-productos th, .tabla-productos td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.tabla-productos th {
+  background-color: #007bff;
+  color: white;
+}
+.tabla-productos .editar {
+    background-color: #ffc107; 
+    color: #333;
 }
 
 HEAD
@@ -96,23 +117,3 @@ HEAD
   min-width: 200px;
 }
 
-.tabla-productos {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-
-.tabla-productos th, .tabla-productos td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
-.tabla-productos th {
-  background-color: #007bff;
-  color: white;
-}
-.tabla-productos .editar {
-    background-color: #ffc107; 
-    color: #333;
-}
